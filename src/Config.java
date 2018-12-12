@@ -40,20 +40,22 @@ public class Config {
         // TODO code here
         try{
             File file = new File(CONFIG_FILE);
+            System.out.print("CONFIG_FILE: ");
             System.out.println(CONFIG_FILE);
-            FileInputStream fileInput = new FileInputStream(file);
-//            Properties properties = new Properties();
-            properties.loadFromXML(fileInput);
-            fileInput.close();
-
+            if(!file.exists()){
+                System.out.println("FILE DOES NOT EXIST!");
+            }else {
+                FileInputStream fileInput = new FileInputStream(file);
+                //            Properties properties = new Properties();
+                properties.loadFromXML(fileInput);
+                fileInput.close();
+            }
         }catch (FileNotFoundException e){
             System.out.println("File Not Found in readProperties: ");
-            TinyWS tiny = new TinyWS();
-            tiny.fatalError(e);
+            TinyWS.fatalError(e);
         }catch(IOException e){
 //            e.printStackTrace();
-            TinyWS tiny = new TinyWS();
-            tiny.fatalError(e);
+            TinyWS.fatalError(e);
         }
 //        catch(NullPointerException e){
 //            e.printStackTrace();
