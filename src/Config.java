@@ -6,14 +6,17 @@ import java.util.Properties;
 import java.io.File;
 /**
  * Process webserver configuration
- * @author student name
+ * @author Thomas Kelly
+ * Config class parses the Config file located at ./TinyWS.xml
+ * Provides the port, default page and default folder in the config file via parsing the xml using the Properties loadXML(File) method
+ * Will also dump these properties to the screen
  */
 public class Config {
     public static final String PORT = "port";
     public static final String DEFAULTPAGE = "defaultPage";
     public static final String DEFAULTFOLDER = "defaultFolder";
 
-    private static final String CONFIG_FILE = "./TinyWS.xml";
+    private static final String CONFIG_FILE = "/TinyWS.xml";
     private static Properties properties;
 
     public Config() {
@@ -28,7 +31,6 @@ public class Config {
 
     }
 
-
     /**
      *public void readProperties()
      * @throws IOException
@@ -38,13 +40,14 @@ public class Config {
         // TODO code here
         try{
             File file = new File(CONFIG_FILE);
+            System.out.println(CONFIG_FILE);
             FileInputStream fileInput = new FileInputStream(file);
 //            Properties properties = new Properties();
             properties.loadFromXML(fileInput);
             fileInput.close();
 
         }catch (FileNotFoundException e){
-            System.out.println("File Not Found");
+            System.out.println("File Not Found in readProperties: ");
             TinyWS tiny = new TinyWS();
             tiny.fatalError(e);
         }catch(IOException e){
@@ -52,18 +55,29 @@ public class Config {
             TinyWS tiny = new TinyWS();
             tiny.fatalError(e);
         }
+//        catch(NullPointerException e){
+//            e.printStackTrace();
+//        }
 
     }
 
+
+    //Where do we handle to make sure that this function is only requested the keys port/defaultpage/defualtfolder???
+    //What does this return if something other than one of these keys is passed in?
     /**
-     *
+     *public String getProperty(String key)
      * @param key
-     * @return
+     * @return The string value of either the port, default page or default folder
      */
     public String getProperty(String key) {
         return properties.getProperty(key);
     }
 
+    /**
+     *  public void dumpProperties()
+     *  Dumps the properties in this.properties to console
+     *  Uses Enumeration as well as using the getProperty function
+     */
     public void dumpProperties() {
         // TODO code here
         Enumeration enuKeys = properties.keys();
