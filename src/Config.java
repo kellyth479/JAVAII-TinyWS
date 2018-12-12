@@ -16,12 +16,12 @@ public class Config {
     public static final String DEFAULTPAGE = "defaultPage";
     public static final String DEFAULTFOLDER = "defaultFolder";
 
-    private static final String CONFIG_FILE = "/TinyWS.xml";
+    private static final String CONFIG_FILE = "TinyWS.xml";
     private static Properties properties;
 
     public Config() {
         // TODO code here
-        this.properties = null;
+        this.properties = new Properties();
 //        try{
 //            readProperties();
 //        }catch(IOException e){
@@ -39,6 +39,8 @@ public class Config {
     public void readProperties() throws IOException {
         // TODO code here
         try{
+            System.out.println("Working Directory = " +
+                    System.getProperty("user.dir"));
             File file = new File(CONFIG_FILE);
             System.out.print("CONFIG_FILE: ");
             System.out.println(CONFIG_FILE);
@@ -46,7 +48,7 @@ public class Config {
                 System.out.println("FILE DOES NOT EXIST!");
             }else {
                 FileInputStream fileInput = new FileInputStream(file);
-                //            Properties properties = new Properties();
+         //                   Properties properties = new Properties();
                 properties.loadFromXML(fileInput);
                 fileInput.close();
             }
